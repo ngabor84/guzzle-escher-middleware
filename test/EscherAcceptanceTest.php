@@ -1,5 +1,7 @@
 <?php
 
+namespace Guzzle\Http\Middleware\Tests;
+
 use Guzzle\Http\Middleware\EscherMiddleware;
 use GuzzleHttp\Client;
 use GuzzleHttp\HandlerStack;
@@ -16,7 +18,7 @@ class EscherAcceptanceTest extends TestCase
      */
     public function invoke_MiddlewareSignsRequest_EscherAuthenticationIsSuccessful()
     {
-        $credential = new  \Guzzle\Http\Middleware\EscherCredential('key', 'secret', 'foo/bar/baz');
+        $credential = new \Guzzle\Http\Middleware\EscherCredential('key', 'secret', 'foo/bar/baz');
         $escherProvider = new Provider('foo/bar/baz', 'key', 'secret', ['key' => 'secret']);
 
         $stack = HandlerStack::create($this->stubAuthenticateEndPoint($escherProvider));
@@ -32,7 +34,7 @@ class EscherAcceptanceTest extends TestCase
         return function (RequestInterface $request) use ($escherProvider) {
             $server = [
                 'REQUEST_METHOD' => $request->getMethod(),
-                'REQUEST_URI' => (string)$request->getUri()->getPath() . '?' . $request->getUri()->getQuery(),
+                'REQUEST_URI' => (string) $request->getUri()->getPath() . '?' . $request->getUri()->getQuery(),
                 'REQUEST_TIME' => time(),
                 'SERVER_NAME' => 'localhost',
                 'SERVER_PORT' => 80,
