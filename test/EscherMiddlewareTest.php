@@ -2,6 +2,7 @@
 
 namespace Guzzle\Http\Middleware\Tests;
 
+use Escher\Escher;
 use Guzzle\Http\Middleware\EscherMiddleware;
 use GuzzleHttp\Client;
 use GuzzleHttp\HandlerStack;
@@ -21,6 +22,23 @@ class EscherMiddlewareTest extends TestCase
     {
         $middleware = $this->createTestMiddleware();
         $this->assertInstanceOf(EscherMiddleware::class, $middleware);
+    }
+
+    /**
+     * @test
+     */
+    public function construct_CreateNewEscherMiddleware_WithPassedEscherObject()
+    {
+        $credential = $this->createTestCredential();
+        $escher = Escher::create($credential->getScope())->setAuthHeaderKey('my-auth-header-key');
+        $client = $this->createTestClientWithCustomEscher($credential, $escher);
+
+        $client->post('http://httpbin.org/post', [
+            'auth' => 'escher',
+        ]);
+
+        $request = $this->getRequestFromClientHistory();
+        $this->assertTrue($request->hasHeader('my-auth-header-key'));
     }
 
     /**

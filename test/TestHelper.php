@@ -32,6 +32,17 @@ trait TestHelper
         return $stack;
     }
 
+    private function createTestClientWithCustomEscher($credential, $escher): Client
+    {
+        $middleware = new EscherMiddleware($credential, $escher);
+
+        $stack = HandlerStack::create();
+        $stack->push($middleware);
+        $stack->push(Middleware::history($this->clientHistory));
+
+        return new Client(['handler' => $stack]);
+    }
+
     private function createTestMiddleware(): EscherMiddleware
     {
         return new EscherMiddleware($this->createTestCredential());
