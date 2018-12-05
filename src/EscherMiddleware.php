@@ -18,10 +18,10 @@ class EscherMiddleware
      */
     private $credential;
 
-    public function __construct(EscherCredential $credential)
+    public function __construct(EscherCredential $credential, Escher $escher = null)
     {
         $this->credential = $credential;
-        $this->escher = Escher::create($this->credential->getScope());
+        $this->escher = $escher ?: Escher::create($this->credential->getScope());
     }
 
     public function __invoke(callable $handler): \Closure
