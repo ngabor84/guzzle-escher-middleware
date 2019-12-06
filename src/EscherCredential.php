@@ -4,7 +4,6 @@ namespace Guzzle\Http\Middleware;
 
 class EscherCredential
 {
-
     /**
      * @var string
      */
@@ -56,5 +55,4 @@ class EscherCredential
     {
         $this->scope = $scope;
     }
-
 }

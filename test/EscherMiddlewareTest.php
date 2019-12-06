@@ -95,7 +95,7 @@ class EscherMiddlewareTest extends TestCase
         $this->assertTrue($request->hasHeader('x-escher-auth'));
         $this->assertTrue($request->hasHeader('x-escher-date'));
         $authHeader = $request->getHeader('x-escher-auth')[0];
-        $this->assertContains('ESR-HMAC-SHA512', $authHeader);
+        $this->assertStringContainsString('ESR-HMAC-SHA512', $authHeader);
     }
 
     /**
@@ -121,7 +121,7 @@ class EscherMiddlewareTest extends TestCase
         $this->assertTrue($request->hasHeader('x-escher-auth'));
         $this->assertTrue($request->hasHeader('x-escher-date'));
         $authHeader = $request->getHeader('x-escher-auth')[0];
-        $this->assertContains('EMS-HMAC-SHA256', $authHeader);
+        $this->assertStringContainsString('EMS-HMAC-SHA256', $authHeader);
     }
 
     /**
@@ -176,7 +176,7 @@ class EscherMiddlewareTest extends TestCase
         $expectedHeaderParts = ['ESR-HMAC-SHA256', 'Credential', 'SignedHeaders', 'Signature'];
 
         foreach ($expectedHeaderParts as $name) {
-            $this->assertContains($name, $authHeader);
+            $this->assertStringContainsString($name, $authHeader);
         }
     }
 
