@@ -82,7 +82,7 @@ class EscherMiddleware
     private function setRequestHeaders(RequestInterface $request, array $headers): RequestInterface
     {
         foreach ($headers as $headerName => $headerValue) {
-            $request = $request->withHeader($headerName, $headerValue);
+            $request = $request->withHeader((string) $headerName, $headerValue);
         }
 
         return $request;
